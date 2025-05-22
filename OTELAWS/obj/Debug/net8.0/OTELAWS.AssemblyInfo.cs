@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OTELAWS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81272fd80996d32250267d82508ffbff162ef3d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("OTELAWS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OTELAWS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
