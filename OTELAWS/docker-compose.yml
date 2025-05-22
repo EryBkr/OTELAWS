@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  app:
+    image: otelaws-image
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=otelaws-service
+
+  otel-collector:
+    image: public.ecr.aws/aws-observability/aws-otel-collector:v0.43.3
+    command: ["--config", "/etc/otel/config.yaml"]
+    volumes:
+      - ./aws-otel-collector.yaml:/etc/otel/config.yaml:ro
+    ports:
+    - "4317:4317"
+    - "4318:4318"
+    - "2000:2000/udp"
+    - "8888:8888"
+    environment:
+    - AWS_REGION=us-east-1

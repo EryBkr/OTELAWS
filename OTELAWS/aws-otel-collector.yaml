@@ -1,0 +1,48 @@
+extensions:
+  health_check:
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+  awsxray:
+    endpoint: 0.0.0.0:2000
+    transport: udp
+
+processors:
+  batch/traces:
+    timeout: 1s
+    send_batch_size: 50
+  batch/metrics:
+    timeout: 60s
+  batch/logs:
+    timeout: 10s
+    send_batch_size: 50
+
+exporters:
+  awsxray:
+  awsemf:
+  awscloudwatchlogs:
+    log_group_name: "otel-demo-logs"
+    log_stream_name: "{instance_id}"
+    region: "us-east-1"
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp, awsxray]
+      processors: [batch/traces]
+      exporters: [awsxray]
+    metrics:
+      receivers: [otlp]
+      processors: [batch/metrics]
+      exporters: [awsemf]
+    logs:
+      receivers: [otlp]
+      processors: [batch/logs]
+      exporters: [awscloudwatchlogs]
+
+  extensions: [health_check]
